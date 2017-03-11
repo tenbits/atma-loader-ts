@@ -6,7 +6,7 @@ _with proper stacktrace support_
 
 The Plugin extends:
 - [`IncludeJS`](https://github.com/atmajs/IncludeJS) with a custom loader
-- [`atma-io`](https://github.com/atmajs/atma-io) with a custom middleware to read ES6 files
+- [`atma-io`](https://github.com/atmajs/atma-io) with a custom middleware to compile the TypeScript files on file read
 - [`atma-server`](https://github.com/atmajs/atma-server) and [`Atma Toolkit`](https://github.com/atmajs/Atma.Toolkit) with a `HTTPHandler` to serve compiled sources (with **sourceMap** support)
 
 
