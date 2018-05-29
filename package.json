@@ -17,7 +17,6 @@
   "devDependencies": {
     "@types/node": "^10.1.3",
     "app-bundler": "0.0.47",
-    "atma-loader": "^1.0.10",
     "atma-loader-ts": "1.0.0"
   },
   "app-bundler": {
