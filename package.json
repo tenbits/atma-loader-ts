@@ -13,7 +13,7 @@
     "url": "https://github.com/tenbits/atma-loader-ts"
   },
   "dependencies": {
-    "atma-io-middleware-base": "^1.0.26",
+    "atma-io-middleware-base": "^1.0.27",
     "atma-loader-stacktrace": "^0.1.1",
     "atma-utils": "^0.1.13",
     "typescript": "^2.2.1"
