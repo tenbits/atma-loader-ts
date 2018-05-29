@@ -3,4 +3,3 @@
 .travis.yml
 test/
 src/
-build.js

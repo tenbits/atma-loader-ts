@@ -5,7 +5,7 @@ import * as utils from 'atma-utils'
 
 export default function process (source: string, file, compiler: Compiler) {
        
-    let uri = file.uri.toString(),
+    let uri = file.uri,
         filename = uri.toLocalFile();
     
     let options = _defaults(compiler.getOption('typescript'), {

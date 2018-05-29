@@ -14,7 +14,7 @@ var _src_compiler;
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 function process(source, file, compiler) {
-    var uri = file.uri.toString(), filename = uri.toLocalFile();
+    var uri = file.uri, filename = uri.toLocalFile();
     var options = _defaults(compiler.getOption('typescript'), {
         fileName: filename,
     });
