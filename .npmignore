@@ -1,5 +1,0 @@
-*.komodoproject
-.npmignore
-.travis.yml
-test/
-src/
