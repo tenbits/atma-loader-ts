@@ -162,6 +162,7 @@ module.exports = Base.create({
     cacheable: true,
     defaultOptions: {
         mimeType: 'text/javascript',
+        sourceMap: true,
         extensions: ['ts'],
         typescript: {}
     },

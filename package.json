@@ -1,22 +1,23 @@
 {
   "name": "atma-loader-ts",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "description": "TypeScript compiler for `atma-io`, `IncludeJS` and `atma-server`.",
   "author": "Alex Kit (alex.kit@atmajs.com)",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "app-bundler"
+    "build": "app-bundler",
+    "release": "atma bump && npm run build && git add -A && git commit -am \"bump\" && npm publish && git push"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/tenbits/atma-loader-ts"
   },
   "dependencies": {
-    "atma-io-middleware-base": "^1.0.34",
+    "atma-io-middleware-base": "^1.0.39",
     "atma-loader-stacktrace": "^0.1.1",
     "atma-utils": "^0.1.13",
-    "typescript": "^3.0.3"
+    "typescript": "^3.7.2"
   },
   "devDependencies": {
     "@types/node": "^10.1.3",
