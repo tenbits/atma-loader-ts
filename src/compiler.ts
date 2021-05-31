@@ -9,7 +9,7 @@ export default function process (source: string, file, compiler: Compiler) {
         filename = uri.toLocalFile();
 
     let options = {
-        ...(<any> compiler.getOption('typescript') ?? {}),
+        ...(<any> compiler.getOption('typescript') || {}),
         fileName: filename,
     };
     if (options.compilerOptions) {
