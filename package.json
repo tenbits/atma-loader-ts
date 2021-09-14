@@ -7,6 +7,8 @@
   "license": "MIT",
   "scripts": {
     "build": "app-bundler",
+    "server": "atma server",
+    "test": "atma test",
     "release": "atma bump && npm run build && git add -A && git commit -am \"bump\" && npm publish && git push"
   },
   "repository": {
@@ -22,6 +24,7 @@
   "devDependencies": {
     "@types/node": "^10.1.3",
     "app-bundler": "0.0.47",
+    "atma": "^0.12.33",
     "atma-loader-ts": "1.0.0"
   },
   "app-bundler": {
