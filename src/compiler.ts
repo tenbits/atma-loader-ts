@@ -52,19 +52,25 @@ export default function process (source: string, file, compiler: Compiler) {
 
 
 function _defaults(target, source){
-    if (target == null)
+    if (target == null) {
         return source;
-    for(var key in source){
-        if (key in target === false)
+    }
+    for (let key in source){
+        if (key in target === false) {
             target[key] = source[key];
+        }
     }
     return target;
 }
 function _compile(source, options) {
-    try {
+    if (options.transformers != null) {
+        _tryLoadTransformers(options.transformers.before);
+        _tryLoadTransformers(options.transformers.after);
+    }
 
-        var compiled =  ts.transpileModule(source, options);
-        var sourceMap = compiled.sourceMapText;
+    try {
+        let compiled =  ts.transpileModule(source, options);
+        let sourceMap = compiled.sourceMapText;
         if (sourceMap != null && typeof sourceMap !== 'string') {
             sourceMap = JSON.stringify(sourceMap, null, 4);
         }
@@ -75,5 +81,16 @@ function _compile(source, options) {
         };
     } catch (error) {
         throw new Error(error.message + '\n' + error.codeFrame);
+    }
+}
+
+function _tryLoadTransformers (arr) {
+    if (arr == null) {
+        return;
+    }
+    for (let i = 0; i < arr.length; i++) {
+        if (typeof arr[i] === 'string') {
+            arr[i] = require(arr[i]);
+        }
     }
 }

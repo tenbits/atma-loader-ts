@@ -1,8 +1,9 @@
 [TypeScript Compiler](http://www.typescriptlang.org) (Atma Plugin)
 -----
-[![Build Status](https://travis-ci.org/atmajs/atma-loader-ts.png?branch=master)](https://travis-ci.org/atmajs/atma-loader-ts)
+[![Build Status](https://travis-ci.com/atmajs/atma-loader-ts.png?branch=master)](https://travis-ci.com/atmajs/atma-loader-ts)
 
-_with proper stacktrace support_
+- supports proper stacktrace line numbers
+- supports custom `ts` transformers
 
 The Plugin extends:
 - [`IncludeJS`](https://github.com/atmajs/IncludeJS) with a custom loader
@@ -10,14 +11,13 @@ The Plugin extends:
 - [`atma-server`](https://github.com/atmajs/atma-server) and [`Atma Toolkit`](https://github.com/atmajs/Atma.Toolkit) with a `HTTPHandler` to serve compiled sources (with **sourceMap** support)
 
 
-
-##### How to use
+##### Usage
 
 ###### Embed into the Project
 
-+ `atma plugin install atma-loader-ts`
++ `npm i atma-loader-ts`
 
-	This adds `atma-loader-babel` npm dependency and the `package.json` would look like:
+    Update `package.json` with:
     ```json
         {
             "dependencies": {
@@ -28,15 +28,24 @@ The Plugin extends:
                     "atma-loader-ts"
                 ],
                 "settings": {
-					"atma-loader-ts": {
-						"extensions" : [ "ts" ]
-						"typescript": {} // typescript compiler options
-					}
+                    "atma-loader-ts": {
+                        "extensions" : [ "ts" ],
+                        "typescript": {
+                            "compilerOptions": {
+                                // typescript compiler options
+                            },
+                            // Optionaly transformers
+                            "transformers": {
+                                "before": ["foo"],
+                                "after": ["bar"]
+                            }
+                        }
+                    }
                 }
             }
         }
     ```
-+ That's all. Now, you are ready to use TypeScript in your project
++ That's it. Now, you are ready to use TypeScript in your project
 
 ##### Quick Try
 
@@ -49,7 +58,7 @@ The Plugin extends:
     <script src='test.ts'></script>
     ```
 + add `test.ts`
-    
+
     ```ts
     function log(msg: string) {
         console.log(msg.toUpperCase());
