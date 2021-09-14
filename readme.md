@@ -1,6 +1,6 @@
 [TypeScript Compiler](http://www.typescriptlang.org) (Atma Plugin)
 -----
-[![Build Status](https://travis-ci.com/atmajs/atma-loader-ts.png?branch=master)](https://travis-ci.com/atmajs/atma-loader-ts)
+[![Build Status](https://travis-ci.com/tenbits/atma-loader-ts.png?branch=master)](https://travis-ci.com/tenbits/atma-loader-ts)
 
 - supports proper stacktrace line numbers
 - supports custom `ts` transformers
