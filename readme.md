@@ -70,5 +70,27 @@ The Plugin extends:
 
 
 
+#### Transformers example
+
+For the example, we will use `nameof` transformer: [ts-nameof](https://github.com/dsherret/ts-nameof/tree/main/packages/ts-nameof)
+
+1. Install the transformer
+```bash
+npm install ts-nameof @types/ts-nameof --save-dev
+```
+
+2. Locate your `ts` configuration and add to the root
+```json
+{
+    "compilerOptions": {
+
+    },
+    "transformers": {
+        "before": ["ts-nameof"]
+    }
+}
+```
+
+
 ----
 The MIT License
