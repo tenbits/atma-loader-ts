@@ -1,6 +1,6 @@
 {
   "name": "atma-loader-ts",
-  "version": "1.1.19",
+  "version": "1.1.20",
   "description": "TypeScript compiler for `atma-io`, `IncludeJS` and `atma-server`.",
   "author": "Alex Kit (alex.kit@atmajs.com)",
   "main": "index.js",
@@ -16,16 +16,16 @@
     "url": "https://github.com/tenbits/atma-loader-ts"
   },
   "dependencies": {
-    "atma-io-middleware-base": "^1.0.44",
+    "atma-io-middleware-base": "^1.0.46",
     "atma-loader-stacktrace": "^0.1.1",
     "atma-utils": "^0.2.58",
     "typescript": "^4.9.3"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
-    "app-bundler": "0.0.47",
-    "atma": "^0.12.33",
-    "atma-loader-ts": "1.0.0"
+    "app-bundler": "^0.1.14",
+    "atma": "^0.15.18",
+    "atma-loader-ts": "^1.1.19"
   },
   "app-bundler": {
     "file": "src/index.ts",
@@ -50,7 +50,16 @@
     ]
   },
   "atma": {
+    "plugins": [
+      "atma-loader-ts"
+    ],
     "settings": {
+      "include": {
+        "amd": true,
+        "extentionDefault": {
+          "js": "ts"
+        }
+      },
       "atma-loader-ts": {
         "typescript": {
           "compilerOptions": {
