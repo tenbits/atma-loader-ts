@@ -9,7 +9,7 @@ export = Base.create({
     defaultOptions: {
         mimeType: 'text/javascript',
         sourceMap: true,
-        extensions: [ 'ts' ],
+        extensions: [ 'ts', 'd.ts', 'ts.map' ],
         typescript: {
 
         }

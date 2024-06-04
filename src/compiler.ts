@@ -1,13 +1,29 @@
 import { Compiler, io } from 'atma-io-middleware-base'
 import * as ts from 'typescript'
 import type { File } from 'atma-io'
+import { compileFunction } from 'vm';
+
+
+type TPluginOptions = ts.TranspileOptions & {
+    sourceMaps?: boolean
+    fileName: string
+    compilerOptions: ts.CompilerOptions
+};
+
+type TOutputType = 'ts' | 'map' | 'd.ts';
 
 export default function process (source: string, file: InstanceType<typeof File>, compiler: Compiler) {
 
     let uri = file.uri;
     let filename = uri.toLocalFile();
+    let outputType = 'ts' as TOutputType;
+    if (/.ts.map$/.test(filename)) {
+        outputType = 'map';
+    } else if (/.d.ts$/.test(filename)) {
+        outputType = 'd.ts';
+    }
 
-    let options = {
+    let options = <TPluginOptions> {
         ...(<any> compiler.getOption('typescript') || {}),
         fileName: filename,
     };
@@ -17,7 +33,7 @@ export default function process (source: string, file: InstanceType<typeof File>
         });
     }
 
-    let compiled = _compile(source, options);
+    let compiled = _compile(source, options, outputType);
     let errors = compiled.errors == null || compiled.errors.length === 0
             ? null
             : 'throw Error("Typescript '
@@ -32,6 +48,20 @@ export default function process (source: string, file: InstanceType<typeof File>
             sourceMap: errors
         };
     }
+
+    if (outputType === 'map') {
+        return {
+            content: compiled.sourceMap,
+            sourceMap: null,
+        };
+    }
+    if (outputType === 'd.ts') {
+        return {
+            content: compiled.definition,
+            sourceMap: null,
+        };
+    }
+
     if (options.sourceMaps === false) {
         return {
             content: compiled.js,
@@ -60,12 +90,12 @@ function _defaults(target, source){
     }
     return target;
 }
-function _compile(source, options) {
+function _compile(source: string, options: TPluginOptions, outputType: TOutputType) {
     if (options.transformers != null) {
         _tryLoadTransformers(options.transformers.before);
         _tryLoadTransformers(options.transformers.after);
     }
-    if (/amd/i.test(options.compilerOptions?.module)) {
+    if (/amd/i.test(options.compilerOptions?.module as any as string)) {
         if (options.transformers == null) {
             options.transformers = {};
         }
@@ -75,13 +105,28 @@ function _compile(source, options) {
         options.transformers.after.push(TopLevelAsyncTransformerForAMD);
     }
 
+    if (outputType === 'd.ts') {
+        let definitions = _compileDefinition(source, options);
+        return {
+            definition: definitions,
+            js: null,
+            sourceMap: null,
+            errors: [],
+        }
+    }
+
     try {
+        if (outputType === 'map') {
+            options.compilerOptions.sourceMap = true;
+        }
+
         let compiled =  ts.transpileModule(source, options);
         let sourceMap = compiled.sourceMapText;
         if (sourceMap != null && typeof sourceMap !== 'string') {
             sourceMap = JSON.stringify(sourceMap, null, 4);
         }
         return {
+            definitions: null,
             js: compiled.outputText,
             sourceMap: sourceMap,
             errors: [],
@@ -89,6 +134,36 @@ function _compile(source, options) {
     } catch (error) {
         throw new Error(error.message + '\n' + error.codeFrame);
     }
+}
+
+function _compileDefinition (source: string, options: TPluginOptions) {
+    let compilerOptions = {
+        ...options.compilerOptions,
+        declaration: true,
+        emitDeclarationOnly: true,
+    }
+    let hostOptions = <ts.TranspileOptions> {
+        ...options,
+        compilerOptions,
+        reportFiles: [options.fileName],
+    };
+    const host = ts.createCompilerHost(hostOptions);
+    const files = {};
+    host.writeFile = (fileName, contents) => {
+        files[fileName] = contents;
+    };
+    host.readFile = () => source;
+
+    const filenameMatch = /(?<filename>[^/.]+)\.[\w\.]+$/.exec(options.fileName);
+    if (filenameMatch == null) {
+        throw new Error(`Could not extract filename from "${ options.fileName}"`);
+    }
+    const filename = filenameMatch?.groups.filename;
+    const program = ts.createProgram([filename], compilerOptions, host);
+
+    program.emit();
+
+    return files[filename + '.d.ts'];
 }
 
 function _tryLoadTransformers (arr) {
