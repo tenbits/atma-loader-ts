@@ -9,10 +9,10 @@ module.exports = {
                         .configurate({
                             'http.eval': function(done){
                                 include
-                                    .js('/index.js::BabelPlugin')
+                                    .js('/index.js::TsPlugin')
                                     .done(function(resp){
                                         var app = atma.server.app;
-                                        resp.BabelPlugin.attach(app);
+                                        resp.TsPlugin.attach(app);
                                         done();
                                     });
                             }
