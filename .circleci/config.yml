@@ -22,19 +22,16 @@ jobs:
           name: Build Project
           command: npm run build
       - run:
-          name: Chrome help
-          command: google-chrome --help
-      - run:
           name: Launch Server
           command: npm run server
           background: true
       - run:
           name: Launch Web
-          command: sleep 10 && google-chrome http://127.0.0.1:5777/utest/
+          command: sleep 10 && google-chrome --webview-verbose-logging --allow-external-pages --new-window http://127.0.0.1:5777/utest/
           background: true
       - run:
           name: Run tests
-          command: sleep 10 && npm run test
+          command: sleep 15 && npm run test
 
 workflows:
   # Inside the workflow, you provide the jobs you want to run, e.g this workflow runs the build-and-test job above.
