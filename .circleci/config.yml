@@ -22,12 +22,15 @@ jobs:
           name: Build Project
           command: npm run build
       - run:
+          name: Chrome help
+          command: google-chrome --help
+      - run:
           name: Launch Server
           command: npm run server
           background: true
       - run:
           name: Launch Web
-          command: sleep 10 && google-chrome http://localhost:5777/utest/
+          command: sleep 10 && google-chrome http://127.0.0.1:5777/utest/
           background: true
       - run:
           name: Run tests
