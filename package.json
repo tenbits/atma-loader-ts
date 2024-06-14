@@ -26,7 +26,8 @@
     "@types/node": "^18.11.9",
     "app-bundler": "^0.1.14",
     "atma": "^0.15.22",
-    "atma-loader-ts": "^1.1.19"
+    "atma-loader-ts": "^1.1.19",
+    "atma-utest": "^0.21.33"
   },
   "app-bundler": {
     "file": "src/index.ts",
