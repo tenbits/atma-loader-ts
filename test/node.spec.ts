@@ -1,4 +1,5 @@
-require('..');
+const Middleware = require('../index.js');
+
 
 const FILE = '/test/foo.ts';
 const FILE_SYNTAX = '/test/foo-errored.ts';
@@ -14,7 +15,7 @@ UTest({
             .js(FILE)
             .done(function(resp){
 
-                eq_(resp.foo('Foo'), 'Hello, Foo');
+                eq_(resp.foo.Greeter('Foo'), 'Hello, Foo');
                 done();
             });
     },
@@ -24,14 +25,10 @@ UTest({
         var content = io.File.read(FILE);
         has_(content, 'function Greeter');
     },
-    'io.File.readAsync': function(){
-
-        return io
-            .File
-            .readAsync(FILE)
-            .done(function(content){
-                has_(content, 'function');
-            });
+    async 'io.File.readAsync' (){
+        const content = await io.File.readAsync<string>(FILE);
+        // should be transpiled to AMD
+        has_(content, ' function (require, exports)');
     },
 
     'io.File.read SourceMap': function(){
@@ -40,14 +37,21 @@ UTest({
         content = JSON.parse(content);
         has_(content, 'mappings');
     },
-    'io.File.readAsync SourceMap': function(){
-        return io
+    async 'io.File.readAsync SourceMap' () {
+        let content = await io
             .File
             .readAsync(FILE + '.map')
-            .done(function(content){
-                content = JSON.parse(content);
-                has_(content, 'mappings');
-            });
+
+        content = JSON.parse(content);
+        has_(content, 'mappings');
+    },
+    async 'io.File.readAsync Definitions' () {
+        let content = await io
+            .File
+            .readAsync(FILE.replace('.ts', '.d.ts'));
+
+        console.log(content)
+        has_(content, 'export declare function Greeter');
     },
 
     '//should handle errors' (done) {

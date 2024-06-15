@@ -1,10 +1,11 @@
 UTest({
-    'include': function(done){
+    'include' (done) {
         include
             .js('/test/foo.ts')
             .done(function(resp){
 
-                eq(resp.foo('Baz'), 'Hello, Baz');
+                eq_(typeof resp.foo.Greeter, 'function');
+                eq_(resp.foo.Greeter('Baz'), 'Hello, Baz');
                 done();
             });
     }

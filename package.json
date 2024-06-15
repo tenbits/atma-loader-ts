@@ -16,7 +16,7 @@
     "url": "https://github.com/tenbits/atma-loader-ts"
   },
   "dependencies": {
-    "atma-io-middleware-base": "^1.0.46",
+    "atma-io-middleware-base": "^1.0.47",
     "atma-loader-stacktrace": "^0.1.1",
     "atma-utils": "^0.2.58",
     "memd": "^0.3.13",
@@ -27,7 +27,8 @@
     "app-bundler": "^0.1.14",
     "atma": "^0.15.22",
     "atma-loader-ts": "^1.1.19",
-    "atma-utest": "^0.21.33"
+    "atma-utest": "^0.21.33",
+    "includejs": "^0.17.4"
   },
   "app-bundler": {
     "file": "src/index.ts",

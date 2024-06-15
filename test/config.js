@@ -4,7 +4,11 @@ module.exports = {
             exec: 'dom',
             tests: 'test/dom.spec.ts',
             $config: {
-                '$before': function(done){
+                '$before': function (done) {
+                    include.cfg('amd', true);
+                    include.cfg('extensionDefault', {
+                        'ts': 'script',
+                    });
                     UTest
                         .configurate({
                             'http.eval': function(done){

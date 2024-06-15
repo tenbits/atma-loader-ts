@@ -22,6 +22,9 @@ export default function process (source: string, file: InstanceType<typeof File>
     } else if (/.d.ts$/.test(filename)) {
         outputType = 'd.ts';
     }
+    if (outputType === 'ts' && compiler.getOption('dtsOnly') === true) {
+        outputType = 'd.ts';
+    }
 
     let options = <TPluginOptions> {
         ...(<any> compiler.getOption('typescript') || {}),
