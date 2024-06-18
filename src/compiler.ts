@@ -1,8 +1,6 @@
 import { Compiler, io } from 'atma-io-middleware-base'
 import * as ts from 'typescript'
 import type { File } from 'atma-io'
-import { compileFunction } from 'vm';
-
 
 type TPluginOptions = ts.TranspileOptions & {
     sourceMaps?: boolean
@@ -17,9 +15,9 @@ export default function process (source: string, file: InstanceType<typeof File>
     let uri = file.uri;
     let filename = uri.toLocalFile();
     let outputType = 'ts' as TOutputType;
-    if (/.ts.map$/.test(filename)) {
+    if (/\.ts\.map$/.test(filename)) {
         outputType = 'map';
-    } else if (/.d.ts$/.test(filename)) {
+    } else if (/\.d\.ts$/.test(filename)) {
         outputType = 'd.ts';
     }
     if (outputType === 'ts' && compiler.getOption('dtsOnly') === true) {

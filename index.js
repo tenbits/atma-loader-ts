@@ -32,10 +32,10 @@ function process(source, file, compiler) {
     var uri = file.uri;
     var filename = uri.toLocalFile();
     var outputType = 'ts';
-    if (/.ts.map$/.test(filename)) {
+    if (/\.ts\.map$/.test(filename)) {
         outputType = 'map';
     }
-    else if (/.d.ts$/.test(filename)) {
+    else if (/\.d\.ts$/.test(filename)) {
         outputType = 'd.ts';
     }
     if (outputType === 'ts' && compiler.getOption('dtsOnly') === true) {
@@ -319,7 +319,6 @@ function createVirtualFile(File) {
                     dtsOnly: true,
                 }
             });
-            debugger;
             var prom = file.readAsync(__assign(__assign({}, (opts !== null && opts !== void 0 ? opts : {})), { cached: false }));
             return prom.then(function () {
                 return (_this.content = file.content);

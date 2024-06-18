@@ -38,7 +38,6 @@ export function createVirtualFile (File) {
                     dtsOnly: true,
                 }
             });
-            debugger;
             let prom = file.readAsync({
                 ...(opts ?? {}),
                 cached: false
