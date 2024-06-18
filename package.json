@@ -1,6 +1,6 @@
 {
   "name": "atma-loader-ts",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "TypeScript compiler for `atma-io`, `IncludeJS` and `atma-server`.",
   "author": "Alex Kit (alex.kit@atmajs.com)",
   "main": "index.js",
