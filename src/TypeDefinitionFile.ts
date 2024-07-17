@@ -12,9 +12,6 @@ export function createVirtualFile (File) {
             var file = new File(path);
             file.read({
                 ...(opts ?? {}),
-                foo: {
-                    bar: 1
-                }
             });
             return (this.content = file.sourceMap);
         }
